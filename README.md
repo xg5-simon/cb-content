@@ -1,2 +1,1 @@
-# cb-playbook
-cb-playbook
+# cb-notebook
