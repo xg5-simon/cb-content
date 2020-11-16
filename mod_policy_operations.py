@@ -11,7 +11,8 @@ from pathlib import Path
 from cbapi.errors import ServerError
 from cbapi.example_helpers import build_cli_parser, get_cb_defense_object
 from cbapi.psc.defense import Policy
-from CarbonBlack.api import CarbonBlackRulePack
+from ContentManager.api import ContentManager
+
 
 log = logging.getLogger(__name__)
 
@@ -112,10 +113,10 @@ def add_rule(cb, parser, args, rulepack):
     # TODO rulepack run funtion instead of calling individually
     # TODO config spec for run function for CI/CD
 
-    rule_file = Path.cwd().joinpath('content','prevention',args.rulefile)
+    rule_file = Path.cwd().joinpath('content', 'policy', args.rulefile)
 
     if rulepack.validate_schema(rule_file) == "valid_yaml":
-        json_content = rulepack.get_json(args.rulefile, 'prevention')
+        json_content = rulepack.get_json(args.rulefile, 'policy')
 
         for policy in policies:
             for rule in json.loads(json_content).get('rules'):
@@ -217,7 +218,7 @@ def main():
 
     args = parser.parse_args()
     cb = get_cb_defense_object(args)
-    rulepack = CarbonBlackRulePack()
+    rulepack = ContentManager()
 
     if args.command_name == "list":
         return list_policies(cb, parser, args)
